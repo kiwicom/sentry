@@ -1,0 +1,7 @@
+build:
+  stage: build
+  image: docker:1.12
+  script:
+   - docker build -t registry.skypicker.com:5005/${CI_PROJECT_PATH}:latest .
+   - docker login -e gitlab-ci@kiwi.com -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.skypicker.com:5005
+   - docker push registry.skypicker.com:5005/${CI_PROJECT_PATH}:latest
