@@ -339,3 +339,4 @@ logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
 logger.setLevel('DEBUG')
 
+SENTRY_FEATURES['auth:register'] = False
