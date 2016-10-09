@@ -332,4 +332,10 @@ AUTH_LDAP_SENTRY_ORGANIZATION_GLOBAL_ACCESS = True
 AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
     'sentry_ldap_auth.backend.SentryLdapBackend',
 )
+SENTRY_METRICS_BACKEND = 'sentry.metrics.datadog.DatadogMetricsBackend'
+SENTRY_METRICS_OPTIONS = {
+    'api_key': env('SENTRY_DATADOG_APIKEY'),
+    'app_key': env('SENTRY_DATADOG_APPKEY'),
+    'tags': {'hostname': socket.gethostname()},
+}
 
