@@ -333,10 +333,3 @@ AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
     'sentry_ldap_auth.backend.SentryLdapBackend',
 )
 
-
-import logging
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel('DEBUG')
-
-SENTRY_FEATURES['auth:register'] = False
