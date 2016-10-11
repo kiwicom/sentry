@@ -339,3 +339,4 @@ SENTRY_METRICS_OPTIONS = {
     'tags': {'hostname': socket.gethostname()},
 }
 
+SENTRY_FEATURES['auth:register'] = False
