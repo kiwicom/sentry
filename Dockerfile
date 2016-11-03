@@ -1,4 +1,4 @@
-FROM sentry:8.9
+FROM sentry:8.10
 
 MAINTAINER Simone Esposito "simone@kiwi.com"
 
