@@ -9,4 +9,7 @@ RUN pip install https://github.com/getsentry/sentry-gitlab/archive/master.zip
 RUN pip install sentry-ldap-auth==2.1
 RUN pip install datadog
 
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 COPY sentry.conf.py /etc/sentry/sentry.conf.py
