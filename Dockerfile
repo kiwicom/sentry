@@ -1,8 +1,8 @@
-FROM sentry:8.10.0
+FROM sentry:8.11.0
 
 MAINTAINER Simone Esposito "simone@kiwi.com"
 
-ENV SENTRY_VERSION=8.10
+ENV SENTRY_VERSION=8.11
 
 RUN apt-get update && apt-get -y install python-dev libldap2-dev libsasl2-dev libssl-dev
 
