@@ -332,11 +332,9 @@ AUTH_LDAP_SENTRY_ORGANIZATION_GLOBAL_ACCESS = os.getenv('LDAP_ORG_GLOBAL_ACCESS'
 AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
     'sentry_ldap_auth.backend.SentryLdapBackend',
 )
-SENTRY_METRICS_BACKEND = 'sentry.metrics.datadog.DatadogMetricsBackend'
+SENTRY_METRICS_BACKEND = 'sentry.metrics.statsd.StatsdMetricsBackend'
 SENTRY_METRICS_OPTIONS = {
-    'api_key': env('SENTRY_DATADOG_APIKEY'),
-    'app_key': env('SENTRY_DATADOG_APPKEY'),
-    'tags': {'hostname': socket.gethostname()},
+    'host': os.getenv('SENTRY_STATSD_HOST', 'datadog-agent.dogstatsd'),
+    'port': int(os.getenv('SENTRY_STATSD_PORT', '8125')),
 }
-
 SENTRY_FEATURES['auth:register'] = False
