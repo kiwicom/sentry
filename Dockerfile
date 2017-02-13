@@ -1,8 +1,8 @@
-FROM sentry:8.11.0
+FROM sentry:8.13.0
 
 MAINTAINER Simone Esposito "simone@kiwi.com"
 
-ENV SENTRY_VERSION=8.11
+ENV SENTRY_VERSION=8.13
 
 RUN apt-get update && apt-get -y install python-dev libldap2-dev libsasl2-dev libssl-dev && \
     pip install sentry-plugins sentry-ldap-auth==2.1 datadog && \
