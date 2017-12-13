@@ -31,8 +31,6 @@
 #  SENTRY_SECRET_KEY
 from sentry.conf.server import *  # NOQA
 from sentry.utils.types import Bool
-import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfUniqueNamesType
 
 import os
 import os.path
@@ -296,42 +294,14 @@ if 'SENTRY_RUNNING_UWSGI' not in os.environ and len(secret_key) < 32:
 SENTRY_OPTIONS['system.secret-key'] = secret_key
 
 
-AUTH_LDAP_SERVER_URI = os.getenv('LDAP_URL')
-AUTH_LDAP_BIND_DN = os.getenv('LDAP_BIND_DN')
-AUTH_LDAP_BIND_PASSWORD = os.getenv('LDAP_BIND_DN_PASSWORD')
+GITLAB_APP_ID = os.getenv('SENTRY_GITLAB_APP_ID')
+GITLAB_APP_SECRET = os.getenv('SENTRY_GITLAB_APP_SECRET')
+GITLAB_BASE_DOMAIN = os.getenv('SENTRY_GITLAB_BASE_DOMAIN')
+GITLAB_API_VERSION = int(os.getenv('SENTRY_GITLAB_API_VERSION', '4'))
+GITLAB_AUTH_SCOPE = os.getenv('SENTRY_GITLAB_AUTH_SCOPE', 'read_user')
+GITLAB_HTTP_SCHEME = 'https'
 
-AUTH_LDAP_USER_SEARCH = LDAPSearch(
-    os.getenv('LDAP_DC'),
-    ldap.SCOPE_SUBTREE,
-    '(uid=%(user)s)',
-)
 
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-    '',
-    ldap.SCOPE_SUBTREE,
-    '(objectClass=groupOfUniqueNames)'
-)
-
-AUTH_LDAP_GROUP_TYPE = GroupOfUniqueNamesType()
-AUTH_LDAP_REQUIRE_GROUP = None
-AUTH_LDAP_DENY_GROUP = None
-
-AUTH_LDAP_USER_ATTR_MAP = {
-    'name': 'givenName',
-    'email': 'mail'
-}
-
-AUTH_LDAP_FIND_GROUP_PERMS = False
-AUTH_LDAP_CACHE_GROUPS = True
-AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
-
-AUTH_LDAP_DEFAULT_SENTRY_ORGANIZATION = os.getenv('LDAP_DEFAULT_SENTRY_ORG')
-AUTH_LDAP_SENTRY_ORGANIZATION_ROLE_TYPE = os.getenv('LDAP_DEFAULT_SENTRY_ROLE', 'member')
-AUTH_LDAP_SENTRY_ORGANIZATION_GLOBAL_ACCESS = os.getenv('LDAP_ORG_GLOBAL_ACCESS', True)
-
-AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS + (
-    'sentry_ldap_auth.backend.SentryLdapBackend',
-)
 SENTRY_METRICS_BACKEND = 'sentry.metrics.statsd.StatsdMetricsBackend'
 SENTRY_METRICS_OPTIONS = {
     'host': os.getenv('SENTRY_STATSD_HOST', 'datadog-agent.dogstatsd'),
